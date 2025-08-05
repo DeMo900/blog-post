@@ -8,7 +8,7 @@ const path = require("path")
 app.set("view engine","ejs")
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use("/assets", express.static("assets"));
+app.use( express.static(path.join(__dirname,"assets")));
 
 app.listen(3000,(err)=>{
     if(err){
@@ -18,5 +18,5 @@ app.listen(3000,(err)=>{
     }
 })
 app.get("/",(req,res)=>{
-    res.render(path.join(__dirname,"views","tailwind_test.ejs"))
+    res.render(path.join("tailwind_test.ejs"))
 })
