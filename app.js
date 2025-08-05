@@ -13,6 +13,7 @@ app.use( express.static(path.join(__dirname,"assets")));
 app.listen(3000,(err)=>{
     if(err){
         console.log(`error while starting ${err}`)
+        process.exit(1)
     }else{
         console.log("conected to the server")
     }
