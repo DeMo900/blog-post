@@ -1,7 +1,7 @@
 
 //basics packages
 const express = require("express")
-const mongo = require("mongoose")
+const mongoose = require("mongoose")
 const app = express()
 const path = require("path")
 const homepageroutes = require("./routes/home-page-routes") 
@@ -27,5 +27,3 @@ mongoose.connect(process.env.DB_URL)
 .catch(err=>{
     console.log(`database error was found ${err}`)
 })
-
-

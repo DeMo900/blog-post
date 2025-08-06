@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tailwind": "npx tailwindcss -i ./src/tailwind_input.css -o ./assets/css/tailwind_output.css --watch"
-     "start": "nodemon --env-file pass.env app.js"
   },
   "repository": {
     "type": "git",
@@ -15,6 +14,7 @@
   "author": "demo&artylix",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^17.2.1",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "node": "^22.18.0",
