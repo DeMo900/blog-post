@@ -28,6 +28,4 @@ mongoose.connect(process.env.DB_URL)
     console.log(`database error was found ${err}`)
 })
 
-app.get("/",(req,res)=>{
-    res.render("index")
-})
+
