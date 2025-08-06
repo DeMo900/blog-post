@@ -1,6 +1,5 @@
 # 🛠 2-Person Git Workflow (Frontend & Backend)
 
-This project uses a **shared `dev` branch** for active development.  
 Follow this guide to avoid Git conflicts and keep work moving smoothly.
 
 ---
@@ -8,8 +7,7 @@ Follow this guide to avoid Git conflicts and keep work moving smoothly.
 ## 📌 1. Always Pull Before Starting Work
 
 ```bash
-git checkout dev
-git pull origin dev
+git pull origin main
 ```
 
 This ensures you have the latest version before making changes.
@@ -34,10 +32,10 @@ git commit -m "Short, clear description (e.g., 'Add login form')"
 
 ---
 
-## 📌 4. Push to the `dev` Branch
+## 📌 4. Push to the `main` Branch
 
 ```bash
-git push origin dev
+git push origin main
 ```
 
 ---
@@ -48,7 +46,7 @@ If Git warns about conflicts when pushing:
 
 1. Pull the latest changes:
    ```bash
-   git pull origin dev
+   git pull origin main
    ```
 2. Fix any conflicts in the files shown.
 3. Stage and commit the resolved files:
@@ -58,7 +56,7 @@ If Git warns about conflicts when pushing:
    ```
 4. Push again:
    ```bash
-   git push origin dev
+   git push origin main
    ```
 
 ---
@@ -68,8 +66,8 @@ If Git warns about conflicts when pushing:
 If you’re making bigger changes:
 
 ```bash
-git checkout dev
-git pull origin dev
+git checkout main
+git pull origin main
 git checkout -b my-feature-branch
 ```
 
@@ -79,7 +77,7 @@ Work and commit as usual, then push:
 git push origin my-feature-branch
 ```
 
-When ready, merge your feature branch into `dev` via a Pull Request.
+When ready, merge your feature branch into `main` via a Pull Request.
 
 ---
 
