@@ -1,5 +1,4 @@
-
-//basics packages
+// Basics packages
 const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
@@ -7,13 +6,19 @@ const path = require("path")
 const homepageroutes = require("./routes/home-page-routes") 
 require("dotenv").config()
 //////
+// Middleware
 app.use(homepageroutes)
 app.set("view engine","ejs")
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use( express.static(path.join(__dirname,"assets")));
+//////
+// Setting the port
+const IP = "localhost";
+const PORT = process.env.PORT || 30000
 
-app.listen(30000,err=>{
+// Start the server
+app.listen(PORT,err=>{
     if(err){
         console.log(`error while starting ${err}`)
         process.exit(1)
@@ -21,9 +26,9 @@ app.listen(30000,err=>{
         console.log("conected to the server")
     }
 })
-//conecting to db
+// Conecting to DB
 mongoose.connect(process.env.DB_URL)
-.then(_=>console.log("conected to database"))
+.then(_=>console.log("conected to database\nrunning at http://"+IP+":"+PORT))
 .catch(err=>{
     console.log(`database error was found ${err}`)
 })
