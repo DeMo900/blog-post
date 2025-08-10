@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Site</title>
+    <title>Blog Site - Login</title>
     <link rel="stylesheet" href="/css/tailwind_output.css">
-    <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body class="bg-neutral-background text-neutral-text">
-    <nav class="flex flex-row justify-self-center justify-between items-center space-x-20 w-1/2 h-12 p-5 mt-5 rounded-full text-neutral-text-dark bg-neutral-background-900">
-        <h1 class="font-semibold text-xl"><a href="">Blog Site</a></h1>
-        <ul class="flex flex-row">
-            <li class="nav-links"><a href="" class="">Home</a></li>
-            <li class="nav-links"><a href="">Blogs</a></li>
-            <li class="nav-links"><a href="">About</a></li>
-            <li class="nav-links"><a href="">Contact</a></li>
-        </ul>
-    </nav>
+<body>
+    <div class="flex justify-center items-center w-screen h-screen">
+        <div class="flex flex-col space-y-5 justify-center items-center rounded-2xl w-2/5 h-3/4 p-4 bg-neutral-background-900 text-neutral-text-dark">
+            <h1 id="login">Login</h1>
+            <div class="flex flex-row justify-center items-center p-1 border-2 rounded-xl w-fit border-neutral-background-800">
+                <button class="rounded-r-none">Sign Up</button>
+                <button class="rounded-l-none" disabled="disabled">Log In</button>
+            </div>
+            <div id="login" class="flex flex-col space-y-2 justify-center items-center w-4/5 h-40">
+                <input type="text" placeholder="Username" class="w-full h-full">
+                <input type="password" name="" id="" placeholder="Password" class="w-full h-full">
+                <button type="submit" class="w-full h-full">Log In</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
