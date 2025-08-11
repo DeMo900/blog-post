@@ -5,7 +5,15 @@ module.exports = {
     "./assets/**/*.js",
   ],
   theme: {
+    screens: {
+      sm: { max: '639px' },
+      md: { max: '767px' },
+      lg: { max: '1023px' }
+    },
     extend: {
+      fontFamily: {
+        nunito: ["Nunito", "sans-serif"]
+      },
       colors: {
         // Status Palette
         status: {

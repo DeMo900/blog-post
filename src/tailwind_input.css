@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    @apply w-screen h-screen m-0 p-0 font-["Nunito", sans-serif] bg-background text-text-primary;
+    @apply w-screen h-screen m-0 p-0 font-nunito bg-background text-text-primary;
 }
 
 form {

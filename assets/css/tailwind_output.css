@@ -644,6 +644,16 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.translate-y-0 {
+  --tw-translate-y: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-full {
+  --tw-translate-y: 100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -857,7 +867,7 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(218 215 205 / var(--tw-bg-opacity));
   padding: 0px;
-  font-family: "Nunito";
+  font-family: Nunito, sans-serif;
   --tw-text-opacity: 1;
   color: rgb(49 46 36 / var(--tw-text-opacity));
 }
@@ -959,4 +969,47 @@ button:hover {
 .hover\:bg-status-info-dark:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(35 41 92 / var(--tw-bg-opacity));
+}
+
+@media (max-width: 639px) {
+  .sm\:h-full {
+    height: 100%;
+  }
+
+  .sm\:h-1\/2 {
+    height: 50%;
+  }
+
+  .sm\:w-full {
+    width: 100%;
+  }
+
+  .sm\:translate-y-full {
+    --tw-translate-y: 100%;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .sm\:flex-col {
+    flex-direction: column;
+  }
+
+  .sm\:rounded-none {
+    border-radius: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+  .md\:max-w-\[800px\] {
+    max-width: 800px;
+  }
+
+  .md\:rounded-lg {
+    border-radius: 0.5rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .lg\:w-full {
+    width: 100%;
+  }
 }
