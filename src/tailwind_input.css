@@ -3,7 +3,14 @@
 @tailwind utilities;
 
 body {
-    @apply m-0 p-0 bg-neutral-background text-neutral-text;
+    @apply w-screen h-screen m-0 p-0 bg-neutral-background text-neutral-text;
+}
+
+form {
+    @apply flex flex-col items-center justify-center gap-4 p-5 w-full h-full;
+}
+form * {
+    @apply w-full h-14;
 }
 
 h1 {
@@ -18,7 +25,10 @@ input:focus {
 }
 
 button {
-    @apply px-2 py-1 rounded-lg bg-brand text-neutral-text;
+    @apply px-2 py-1 rounded-lg bg-brand text-neutral-text transition-colors duration-200;
+}
+button:hover {
+    @apply bg-brand-300;
 }
 button:disabled {
     @apply bg-neutral-background-400 cursor-not-allowed;
