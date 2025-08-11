@@ -19,19 +19,23 @@ module.exports = {
         status: {
           success: {
             DEFAULT: "#38663C",
-            dark: "#27492B"
+            dark: "#3B5D33",    // brighter and a bit more saturated
+            muted: "#2B4430"
           },
           info: {
             DEFAULT: "#3A4591",
-            dark: "#23295C"
+            dark: "#2A3575",    // brighter and more saturated than #23295C
+            muted: "#2E395F"
           },
           warning: {
             DEFAULT: "#855F37",
-            dark: "#5C3F1F"
+            dark: "#6E4E29",    // brighter & warmer than #5C3F1F
+            muted: "#5E452D"
           },
           danger: {
             DEFAULT: "#83393E",
-            dark: "#5A262A"
+            dark: "#703237",    // brighter & more vivid than #5A262A
+            muted: "#5B2B2F"
           }
         },
         // Main Palette
