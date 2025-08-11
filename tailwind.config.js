@@ -9,53 +9,49 @@ module.exports = {
       colors: {
         // Status Palette
         status: {
-          success: "#48864D",
-          info: "#4A57BA",
-          warning: "AD7E48",
-          danger: "#A5494F",
-        },
-        // Main Palette
-        neutral: {
-          text: {
-            DEFAULT: '#d4d4d4',
-            dark: '#1f1f1f',
+          success: {
+            DEFAULT: "#38663C",
+            dark: "#27492B"
           },
-          background: {
-            DEFAULT: '#0e0e0e',
-            100: '#0e0e0e',
-            200: '#1a1a1a',
-            300: '#262626',
-            400: '#333333',
-            500: '#4d4d4d',
-            600: '#6b6b6b',
-            700: '#898989',
-            800: '#b6b6b6',
-            900: '#e2e2e2'
+          info: {
+            DEFAULT: "#3A4591",
+            dark: "#23295C"
+          },
+          warning: {
+            DEFAULT: "#855F37",
+            dark: "#5C3F1F"
+          },
+          danger: {
+            DEFAULT: "#83393E",
+            dark: "#5A262A"
           }
         },
+        // Main Palette
         brand: {
-          DEFAULT: '#409d9d',
-          100: '#102121',
-          200: '#1f3d3d',
-          300: '#2e5959',
-          400: '#3d7676',
-          500: '#409d9d',
-          600: '#5bb3b3',
-          700: '#83c8c8',
-          800: '#b3dddd',
-          900: '#e0f3f3'
+          DEFAULT: '#588157',          // fern_green DEFAULT
+          dark: '#3a5a40',             // hunter_green DEFAULT
+          light: '#96b795',            // fern_green 700
         },
         accent: {
-          DEFAULT: '#8a6a89',
-          100: '#1c141b',
-          200: '#392935',
-          300: '#574050',
-          400: '#755668',
-          500: '#8a6a89',
-          600: '#a3849f',
-          700: '#be9fba',
-          800: '#d9c0d7',
-          900: '#f2e4f1'
+          DEFAULT: '#a3b18a',          // sage DEFAULT
+          dark: '#344e41',             // brunswick_green DEFAULT
+          light: '#dae0d0',            // sage 800
+        },
+        background: {
+          lightest: '#f8f7f5',         // timberwolf 900
+          lighter: '#e9e7e1',          // timberwolf 700
+          DEFAULT: '#dad7cd',          // timberwolf DEFAULT
+          dark: '#615b48',             // timberwolf 200
+        },
+        text: {
+          primary: '#312e24',          // timberwolf 100
+          secondary: '#f0efeb',        // timberwolf 800
+          tertiary: '#859865',         // sage 400
+          muted: '#466645',            // fern_green 400
+        },
+        border: {
+          DEFAULT: '#2e4833',          // hunter_green 400
+          light: '#a3c2b3',            // brunswick_green 800
         }
       },
     },

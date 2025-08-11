@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    @apply w-screen h-screen m-0 p-0 bg-neutral-background text-neutral-text;
+    @apply w-screen h-screen m-0 p-0 font-["Nunito", sans-serif] bg-background text-text-primary;
 }
 
 form {
@@ -18,22 +18,19 @@ h1 {
 }
 
 input {
-    @apply p-2 rounded-lg border-2 border-neutral-background-800 outline-none bg-transparent transition-colors duration-200;
+    @apply p-2 rounded-lg border-2 border-border outline-none bg-transparent transition-colors duration-200 shadow-md;
 }
 input:focus {
-    @apply border-brand;
+    @apply border-border-light shadow-lg;
 }
 
 button {
-    @apply px-2 py-1 rounded-lg bg-brand text-neutral-text transition-colors duration-200;
+    @apply px-2 py-1 rounded-lg bg-brand text-text-secondary transition-colors duration-200 shadow-md;
 }
 button:hover {
-    @apply bg-brand-300;
-}
-button:disabled {
-    @apply bg-neutral-background-400 cursor-not-allowed;
+    @apply bg-brand-dark shadow-lg;
 }
 
 .nav-links {
-    @apply px-3 py-1 rounded-full hover:bg-neutral-background-800 transition-colors duration-200;
+    @apply px-3 py-1 rounded-full /*hover:bg-neutral-background-800*/ transition-colors duration-200;
 }
