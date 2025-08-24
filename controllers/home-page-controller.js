@@ -5,17 +5,18 @@ const get = (req,res)=>{
 }
 //signup
 const signup = async (req,res)=>{
-    let result =  await um.find({username:req.body.username})
-    if(result.length>0){
-        res.send("user is already existed")
+    let result =  await req.body
+    console.log("Received signup data:", result)
+    if(result.username !="" && result.password !="" && result.email !=""){
+        um.insertOne(result).then(_=>{
+            console.log("signup successful")
+            res.send("signup successful")
+        }).catch((err)=>{
+            console.log(`error while inserting: ${err}`)
+            res.status(400)
+        })
     }else{
-         um.insertOne({username:req.body.username,password:req.body.password}).then(_=>{
-    
-console.log("sent")
- }).catch((err)=>{
-console.log(`error while inserting ${err}`)
-res.status(400)
- })
+        res.send("user is already existed")
     }
 }
 //sign in

@@ -4,7 +4,7 @@ const mongo = require("mongoose")
 const users = new mongo.Schema({
 email:{type:String,
     required:true,
-    match:[ /^[a-zA-Z]+\d+@[a-zA-Z]+\.[a-zA-Z]+$/ ,
+    match:[ /^[^\s@]+@[^\s@]+\.[^\s@]+$/ ,
         "invalid email TRY ANOTHER ONE"
     ]
 },

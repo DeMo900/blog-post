@@ -14,17 +14,19 @@
 <body class="flex justify-center items-center">
     <section class="flex justify-center items-center w-full h-full">
         <div class="relative flex flex-row-reverse sm:flex-col justify-center items-center w-5/6 max-w-[800px] sm:w-full h-4/5 sm:h-full rounded-lg sm:rounded-none overflow-hidden bg-background-lightest shadow-xl">
-            <form class="transition-opacity duration-500" id="loginForm" action="" method="post">
+            <!-- Login Form -->
+            <form class="transition-opacity duration-500" id="loginForm" action="/signin" method="post">
                 <h1 class="text-right text-brand">Login</h1>
-                <input type="text" name="username" placeholder="Username" required>
+                <input type="text" name="username" id="username" placeholder="Username" required>
                 <input type="password" name="" id="password" placeholder="Password" required>
                 <button class="bg-brand" type="submit">Log In</button>
             </form>
-            <form class="transition-opacity duration-500" id="signupForm" action="" method="post">
+            <!-- Sign Up Form -->
+            <form class="transition-opacity duration-500" id="signupForm" action="/signup" method="post">
                 <h1 class="text-status-info">Sign Up</h1>
-                <input type="text" name="username" placeholder="Username" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="" id="password" placeholder="Password" required>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="password" name="password" id="password" placeholder="Password" required>
                 <button class="bg-status-info hover:bg-status-info-dark" type="submit">Sign Up</button>
             </form>
 
