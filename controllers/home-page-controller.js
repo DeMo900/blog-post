@@ -1,36 +1,42 @@
 /////requiring
 const um = require("../models/models")
-const get = (req,res)=>{
+//rendering home
+let gethome = (req,res)=>{
+    res.render("home")
+}
+//rendering inndex
+let getindex = (req,res)=>{
     res.render("index")
 }
 //signup
-const signup = async (req,res)=>{
-    let result =  await req.body
-    console.log("Received signup data:", result)
-    if(result.username !="" && result.password !="" && result.email !=""){
-        um.insertOne(result).then(_=>{
-            console.log("signup successful")
-            res.send("signup successful")
-        }).catch((err)=>{
-            console.log(`error while inserting: ${err}`)
-            res.status(400)
-        })
-    }else{
-        res.send("user is already existed")
-    }
+let signup = async (req,res)=>{
+let result = await um.find({username:req.body.username})
+if(result.length===0) {
+    let newuser = new um({
+        username:req.body.username,
+        password:req.body.password,
+        email:req.body.email
+    })
+    newuser.save()
+    res.redirect("/index")
+    console.log("signup successful")
+}else{
+    res.send("user already exists").status(400)
+    console.log(result)}
 }
 //sign in
-const signin = async (req,res)=>{
-let result = await um.find({username:req.body.username,password:req.body.password})
+let signin = async (req,res)=>{
+let result = await um.find({username:req.body.username})
 
 if(result.length===0) {  
    res.send("signup first").status(404)
-   
+   console.log(result)
 }else{
-    res.redirect("")
+    res.redirect("/home")
+    console.log("signin successful")
 }
 
 }
 
 //exporting
-module.exports={get,signup,signin}
+module.exports={gethome,getindex,signup,signin}

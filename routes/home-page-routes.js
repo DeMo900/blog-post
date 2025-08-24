@@ -1,12 +1,11 @@
 //creating router 
 const express = require("express")
 const router = express.Router()
-const {get}= require("../controllers/home-page-controller")
-const {signup}= require("../controllers/home-page-controller")
-const {signin}= require("../controllers/home-page-controller")
+const {getindex,gethome,signup,signin}= require("../controllers/home-page-controller")
 
 //adding routes
-router.get("/",get)
+router.get("/home",gethome)
+router.get("/index",getindex)
 router.post("/signup",signup)
 router.post("/signin",signin)
 
