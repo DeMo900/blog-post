@@ -46,19 +46,17 @@ return  res.status(404).send("signup first")
 }
 
 try{
-    let bc = await bcrypt.compare("Qazwsxedcrfv233@",result[0].password)
+    let bc = await bcrypt.compare(req.body.password,result[0].password)
     //ceck if password matches
 if(!bc){
     res.status(400).send("wrong password")
     console.log("wrong password")
-    //shows only the username without the password --issue
-    console.log(req.body)
 }else{
     //redirecting to home page
      res.redirect("/home")
     console.log("signin successful")
-    //shows only the username without the password --issue
-    console.log(req.body)
+  
+
 
 }
 //catching error
