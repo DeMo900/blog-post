@@ -2,6 +2,7 @@
 const um = require("../models/models")
 const bcrypt = require("bcryptjs")
 const {validation} = require("../validation/user-validation.js")
+const { hash } = require("crypto")
 //rendering home
 let gethome = (req,res)=>{
     res.render("home")
@@ -12,41 +13,59 @@ let getindex = (req,res)=>{
 }
 //signup
 let signup = async (req,res)=>{
-    //checking if user exists
-let result = await um.find({username:req.body.username})
-//hashing pass
-let hashedpass = await bcrypt.hash(req.body.password,12)
-//checking if user exists and if not check if there is a validation error and if not it works
-if(result.length===0) {
-    const {error} = validation(req.body)
+const {error} = validation(req.body)
     if(!error){
-    let newuser = new um({
+        let result = await um.find({username:req.body.username})
+        if(result.length!==0) {
+return  res.status(400).send("user exists already")
+}
+let hashedpass
+try{
+             hashedpass = await bcrypt.hash(req.body.password,12)
+}catch(err){
+    console.log(err)
+}
+        let newuser = new um({
         username:req.body.username,
         password:hashedpass,
         email:req.body.email
     })
-    newuser.save()
+    await newuser.save()
     res.redirect("/index")
     console.log("signup successful")
-}else{
-    console.log("validation error"+error)
+    }else {
+        res.status(400).send(`validation error: ${error}`)
 }
-}else{
-    res.send("user already exists").status(400)
-    console.log(result)}
 }
 //sign in
 let signin = async (req,res)=>{
 let result = await um.find({username:req.body.username})
 
 if(result.length===0) {  
-   res.send("signup first").status(404)
-   console.log(result)
-}else{
-    res.redirect("/home")
-    console.log("signin successful")
+return  res.status(404).send("signup first")
 }
 
+try{
+    let bc = await bcrypt.compare("Qazwsxedcrfv233@",result[0].password)
+    //ceck if password matches
+if(!bc){
+    res.status(400).send("wrong password")
+    console.log("wrong password")
+    //shows only the username without the password --issue
+    console.log(req.body)
+}else{
+    //redirecting to home page
+     res.redirect("/home")
+    console.log("signin successful")
+    //shows only the username without the password --issue
+    console.log(req.body)
+
+}
+//catching error
+}catch(err){
+    console.log(err)
+return res.status(500).send("internal server error")
+}
 }
 
 //exporting

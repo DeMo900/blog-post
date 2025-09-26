@@ -4,18 +4,18 @@ const joi = require("joi")
 
 const validation =  data=>{
 const schema = joi.object({
-    email:joi.string
+    email:joi.string()
     .pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/ )
-    .required(true),
-    username:joi.string
+    .required(),
+    username:joi.string()
     .min(3)
-    .required(true),
+    .required(),
 password : joi.string()
 .min(5)
 .pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*\W)/)
 .required()
-.unknown(true)
-})
+
+}).unknown(true)
 
 return schema.validate(data)
 
