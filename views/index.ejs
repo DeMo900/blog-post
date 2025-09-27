@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 </head>
 <body class="flex justify-center items-center">
-    <section id="formContainer" class="flex justify-center items-center w-full h-full transition-opacity duration-200 hidden">
+    <section id="formContainer" class="flex justify-center items-center w-full h-full transition-opacity duration-200">
         <div class="relative flex flex-row-reverse sm:flex-col justify-center items-center w-5/6 max-w-[800px] sm:w-full h-4/5 sm:h-full rounded-lg sm:rounded-none overflow-hidden bg-background-lightest shadow-xl">
             <!-- Login Form -->
             <form class="transition-opacity duration-500" id="loginForm" action="/signin" method="post">
@@ -40,9 +40,19 @@
             </div>
         </div>
     </section>
-    <section id="formContainer" class="absolute flex justify-center items-center w-full h-full transition-opacity duration-200">
-        <div class="bg-background-lighter p-5 rounded-lg shadow-lg">
+    <section id="forgetPasswordModal" class="absolute flex justify-center items-center w-full h-full transition-opacity duration-200 opacity-0 hidden">
+        <div class="bg-background-lightest p-5 rounded-lg shadow-lg">
+            <form id="forgetPasswordForm">
+                <h2 class="font-bold text-lg h-6">Enter Your Email</h2>
+                <input type="email" name="forgetPasswdEmail" id="forgetPasswdEmail" class="w-64 border-status-info-muted focus:border-status-info" required>
+                <button type="submit" class="bg-status-info hover:bg-status-info-muted">Continue</button>
+            </form>
+        </div>
+    </section>
+    <!-- <section id="forgetPasswordModal" class="absolute flex justify-center items-center w-full h-full transition-opacity duration-200 opacity-0 hidden">
+        <div class="bg-background-lightest p-5 rounded-lg shadow-lg">
             <form action="">
+                <h2 class="text-center justify-self-center">[Email Here]</h2>
                 <div class="flex flex-row justify-between w-[350px]">
                     <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-2')" id="forget-inp-1" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
                     <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-3')" id="forget-inp-2" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
@@ -52,10 +62,11 @@
                     <input type="text" maxlength="1" id="forget-inp-6" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
                 </div>
                 <button type="submit" class="bg-status-info hover:bg-status-info-muted">Forget Password</button>
-                <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Forget Password</button>
+                <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Resend (timer)</button>
+                <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Wrong Email?</button>
             </form>
         </div>
-    </section>
+    </section> -->
     <script>
         // Media query to detect small screens
         const isSmallScreen = window.matchMedia('(max-width: 639px)');
@@ -63,6 +74,7 @@
         // JavaScript to handle the toggle between Login and Sign Up
         // Get Elements
         const formContainer = document.getElementById('formContainer');
+        const forgetPasswordModal = document.getElementById('forgetPasswordModal');
         
         const toggleBtn = document.getElementById('toggleBtn');
         const overlay = document.getElementById('overlay');
@@ -146,6 +158,12 @@
 
         forgetBtn.addEventListener('click', () => {
             fade(formContainer);
+            toggleHidden(formContainer, true);
+
+            setTimeout(() => {
+                toggleHidden(forgetPasswordModal);
+                fade(forgetPasswordModal);
+            }, 100);
         });
 
         function moveNextForgetInput(current, next) {
@@ -154,13 +172,31 @@
             }
         }
 
-        function fade(e) {
-            if (e.classList.contains('opacity-100')) {
+        function fade(e) {            
+            if (e.classList.contains('opacity-100') || !e.classList.contains('opacity-0')) {
                 e.classList.remove('opacity-100');
                 e.classList.add('opacity-0');
             } else {
                 e.classList.remove('opacity-0');
                 e.classList.add('opacity-100');
+            }
+        }
+
+        function toggleHidden(e, afterFade = false, afterFadeTimer = 200) {
+            if (afterFade) {
+                setTimeout(() => {
+                    if (e.classList.contains('hidden')) {
+                        e.classList.remove('hidden');
+                    } else {
+                        e.classList.add('hidden');
+                    }
+                }, afterFadeTimer);
+            } else {
+                if (e.classList.contains('hidden')) {
+                    e.classList.remove('hidden');
+                } else {
+                    e.classList.add('hidden');
+                }
             }
         }
 
@@ -193,6 +229,27 @@
                 toggleBtn.classList.remove('hover:bg-brand-dark');
             }
         }
+
+        const form = document.getElementById('forgetPasswordForm');
+
+        form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const forgetPasswdEmail = document.getElementById('forgetPasswdEmail').value;
+
+        fetch('/signin/forgotpassword', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ forgetPasswdEmail })
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Code for after sending the forget password request
+        })
+        .catch(err => console.error(err));
+        });
     </script>
 </body>
 </html>
