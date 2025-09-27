@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 </head>
 <body class="flex justify-center items-center">
-    <section class="flex justify-center items-center w-full h-full">
+    <section id="formContainer" class="flex justify-center items-center w-full h-full transition-opacity duration-200 hidden">
         <div class="relative flex flex-row-reverse sm:flex-col justify-center items-center w-5/6 max-w-[800px] sm:w-full h-4/5 sm:h-full rounded-lg sm:rounded-none overflow-hidden bg-background-lightest shadow-xl">
             <!-- Login Form -->
             <form class="transition-opacity duration-500" id="loginForm" action="/signin" method="post">
@@ -20,6 +20,7 @@
                 <input type="text" name="username" id="username" placeholder="Username" required>
                 <input type="password" name="password" id="password" placeholder="Password" required>
                 <button class="bg-brand" type="submit">Log In</button>
+                <button id="forgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-10 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Forget Password</button>
             </form>
             <!-- Sign Up Form -->
             <form class="transition-opacity duration-500" id="signupForm" action="/signup" method="post">
@@ -39,16 +40,36 @@
             </div>
         </div>
     </section>
+    <section id="formContainer" class="absolute flex justify-center items-center w-full h-full transition-opacity duration-200">
+        <div class="bg-background-lighter p-5 rounded-lg shadow-lg">
+            <form action="">
+                <div class="flex flex-row justify-between w-[350px]">
+                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-2')" id="forget-inp-1" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
+                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-3')" id="forget-inp-2" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
+                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-4')" id="forget-inp-3" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
+                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-5')" id="forget-inp-4" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
+                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-6')" id="forget-inp-5" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
+                    <input type="text" maxlength="1" id="forget-inp-6" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
+                </div>
+                <button type="submit" class="bg-status-info hover:bg-status-info-muted">Forget Password</button>
+                <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Forget Password</button>
+            </form>
+        </div>
+    </section>
     <script>
         // Media query to detect small screens
         const isSmallScreen = window.matchMedia('(max-width: 639px)');
         
         // JavaScript to handle the toggle between Login and Sign Up
         // Get Elements
+        const formContainer = document.getElementById('formContainer');
+        
         const toggleBtn = document.getElementById('toggleBtn');
         const overlay = document.getElementById('overlay');
         const overlayTitle = document.getElementById('overlayTitle');
         const overlayText = document.getElementById('overlayText');
+
+        const forgetBtn = document.getElementById('forgetBtn');
 
         // Element Contents
         const overlayTitleLoginContent = 'Welcome Back!';
@@ -122,6 +143,16 @@
                 changeOverlayContent(false);
             }
         });
+
+        forgetBtn.addEventListener('click', () => {
+            fade(formContainer);
+        });
+
+        function moveNextForgetInput(current, next) {
+            if (current.value.length >= 1 && current.value != ' ') {
+                document.getElementById(next)?.focus();
+            }
+        }
 
         function fade(e) {
             if (e.classList.contains('opacity-100')) {
