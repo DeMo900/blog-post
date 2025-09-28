@@ -49,9 +49,9 @@
             </form>
         </div>
     </section>
-    <!-- <section id="forgetPasswordModal" class="absolute flex justify-center items-center w-full h-full transition-opacity duration-200 opacity-0 hidden">
+    <section id="forgetPasswordCodeModal" class="absolute flex justify-center items-center w-full h-full transition-opacity duration-200 opacity-0 hidden">
         <div class="bg-background-lightest p-5 rounded-lg shadow-lg">
-            <form action="">
+            <form id="forgetPasswordCodeForm" action="">
                 <h2 class="text-center justify-self-center">[Email Here]</h2>
                 <div class="flex flex-row justify-between w-[350px]">
                     <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-2')" id="forget-inp-1" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
@@ -66,7 +66,7 @@
                 <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Wrong Email?</button>
             </form>
         </div>
-    </section> -->
+    </section>
     <script>
         // Media query to detect small screens
         const isSmallScreen = window.matchMedia('(max-width: 639px)');
@@ -75,6 +75,7 @@
         // Get Elements
         const formContainer = document.getElementById('formContainer');
         const forgetPasswordModal = document.getElementById('forgetPasswordModal');
+        const forgetPasswordCodeModal = document.getElementById('forgetPasswordCodeModal');
         
         const toggleBtn = document.getElementById('toggleBtn');
         const overlay = document.getElementById('overlay');
@@ -230,25 +231,60 @@
             }
         }
 
-        const form = document.getElementById('forgetPasswordForm');
+        const formForgetPassword = document.getElementById('forgetPasswordForm');
 
-        form.addEventListener('submit', function(e) {
-        e.preventDefault();
+        formForgetPassword.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        const forgetPasswdEmail = document.getElementById('forgetPasswdEmail').value;
+            const forgetPasswdEmail = document.getElementById('forgetPasswdEmail').value;
 
-        fetch('/signin/forgotpassword', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ forgetPasswdEmail })
-        })
-        .then(res => res.json())
-        .then(data => {
-            // Code for after sending the forget password request
-        })
-        .catch(err => console.error(err));
+            fetch('/signin/forgotpassword', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ forgetPasswdEmail })
+            })
+            .then(res => res.json())
+            .then(data => {
+                fade(forgetPasswordModal);
+                toggleHidden(forgetPasswordModal, true);
+
+                toggleHidden(forgetPasswordCodeModal);
+                fade(forgetPasswordCodeModal);
+            })
+            .catch(err => console.error(err));
+        });
+
+        const formForgetPasswordCode = document.getElementById('forgetPasswordCodeForm');
+
+        formForgetPasswordCode.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const forgetPasswdCode1 = document.getElementById('forget-inp-1').value;
+            const forgetPasswdCode2 = document.getElementById('forget-inp-2').value;
+            const forgetPasswdCode3 = document.getElementById('forget-inp-3').value;
+            const forgetPasswdCode4 = document.getElementById('forget-inp-4').value;
+            const forgetPasswdCode5 = document.getElementById('forget-inp-5').value;
+            const forgetPasswdCode6 = document.getElementById('forget-inp-6').value;
+            const forgetPasswdCode = `${forgetPasswdCode1}${forgetPasswdCode2}${forgetPasswdCode3}${forgetPasswdCode4}${forgetPasswdCode5}${forgetPasswdCode6}`;
+
+            fetch('/signin/forgotpassword/verify', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ forgetPasswdCode })
+            })
+            .then(res => res.json())
+            .then(data => {
+                fade(forgetPasswordCodeModal);
+                toggleHidden(forgetPasswordCodeModal, true);
+
+                toggleHidden(formContainer);
+                fade(formContainer);
+            })
+            .catch(err => console.error(err));
         });
     </script>
 </body>
