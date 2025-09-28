@@ -1,8 +1,9 @@
 /////requiring
-const um = require("../models/models")
+const um = require("../models/usermodel.js")
+const tm = require("../models/tokenmodel.js")
 const bcrypt = require("bcryptjs")
 const {validation} = require("../validation/user-validation.js")
-const { hash } = require("crypto")
+const mailer = require("nodemailer")
 //rendering home
 let gethome = (req,res)=>{
     res.render("home")
@@ -31,7 +32,7 @@ try{
         email:req.body.email
     })
     await newuser.save()
-    res.redirect("/index")
+    res.redirect("/signin")
     console.log("signup successful")
     }else {
         res.status(400).send(`validation error: ${error}`)
@@ -65,6 +66,40 @@ if(!bc){
 return res.status(500).send("internal server error")
 }
 }
+//forgot password
+let forgotpassword= async(req,res)=>{
+ console.log(req.body)
+ let result =await um.find({email:req.body.forgetPasswdEmail})
+    if(result.length===0){
+        return res.status(404).send("user not found signup first")
+    }
+ //creating the transport
+const transport = mailer.createTransport({
+   
+      service: 'gmail',
+    port: 587,
+    auth: {
+        user: 'proplayer524522@gmail.com',
+        pass: 'tosnrnlttudhivny'
+    }
+})
+//sending mails
+transport.sendMail(
+    {
+  to: `${req.body.forgetPasswdEmail}`, 
+  subject: "Hello from Nodemailer!", 
+  text: "This is a plain text body", 
+  
+}
+,(err,info)=>{
+    if(err){
+        console.log(err)
+    }else{
+        console.log(info)
+    }
+}
+)
+}
 
 //exporting
-module.exports={gethome,getindex,signup,signin}
+module.exports={gethome,getindex,signup,signin,forgotpassword}
