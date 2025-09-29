@@ -19,7 +19,7 @@ const IP = "localhost";
 const PORT = process.env.PORT || 30000
 
 // Start the server
-app.listen(PORT,err=>{
+app.listen(PORT,err=>{require("dotenv").config()
     if(err){
         console.log(`error while starting ${err}`)
         process.exit(1)

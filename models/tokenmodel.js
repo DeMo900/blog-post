@@ -1,10 +1,26 @@
 
+const { number } = require("joi");
 const mongo = require("mongoose")
 
-const token = new mongo.Schema({
-    username:{type:String,required:true},
-    token:{type:String,required:true}
+let token = new mongo.Schema({
+    email:{
+        type:String,
+        required:true,
+        match:/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    },
+    token:{
+        type:String,
+        required:true,
+        minlength:6
+    },
+
+  createdAt:{
+    type:Date,
+    default:Date.now,
+    expires:900
+  }
+
 })
-const tm = mongo.model("token",token)
+let tm = mongo.model("token",token)
 
 module.exports = tm;

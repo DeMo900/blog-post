@@ -6,8 +6,8 @@ const {getindex,gethome,signup,signin,forgotpassword}= require("../controllers/h
 //adding routes
 router.get("/home",gethome)
 router.get("/signin",getindex)
-router.post("/postsignup",signup)
-router.post("/postsignin",signin)
+router.post("/signup",signup)
+router.post("/signin",signin)
 router.post("/signin/forgotpassword",forgotpassword)
 
 //exporting
