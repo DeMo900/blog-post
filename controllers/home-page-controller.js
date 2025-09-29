@@ -95,7 +95,7 @@ code+=crypto.randomInt(0,9)
 }
 }catch(err){
     console.log(`error while generating the code ${err}`)
-    return res.status(500)
+    return res.status(500).send("error while generating the code")
 }
  //creating the transport
 const transport = mailer.createTransport({
@@ -103,7 +103,7 @@ const transport = mailer.createTransport({
       service: 'gmail',
     port: 587,
     auth: {
-        user: 'proplayer524522@gmail.com',
+        user: process.env.APP_EMAIL,
         pass: process.env.APP_PASS
     }
 })
@@ -118,7 +118,7 @@ await transport.sendMail(
 }
 )
 }catch(err){
-    console.log(`error while sending mail ${error}`)
+    console.log(`error while sending mail ${err}`)
     return res.status(500).send("error while sending the email")
 }
 
