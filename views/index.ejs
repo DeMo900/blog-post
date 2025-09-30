@@ -67,6 +67,7 @@
             </form>
         </div>
     </section>
+    <script src="/js/common.js"></script>
     <script>
         // Media query to detect small screens
         const isSmallScreen = window.matchMedia('(max-width: 639px)');
@@ -173,34 +174,6 @@
             }
         }
 
-        function fade(e) {            
-            if (e.classList.contains('opacity-100') || !e.classList.contains('opacity-0')) {
-                e.classList.remove('opacity-100');
-                e.classList.add('opacity-0');
-            } else {
-                e.classList.remove('opacity-0');
-                e.classList.add('opacity-100');
-            }
-        }
-
-        function toggleHidden(e, afterFade = false, afterFadeTimer = 200) {
-            if (afterFade) {
-                setTimeout(() => {
-                    if (e.classList.contains('hidden')) {
-                        e.classList.remove('hidden');
-                    } else {
-                        e.classList.add('hidden');
-                    }
-                }, afterFadeTimer);
-            } else {
-                if (e.classList.contains('hidden')) {
-                    e.classList.remove('hidden');
-                } else {
-                    e.classList.add('hidden');
-                }
-            }
-        }
-
         function changeOverlayContent(showLogin = true) {
             if (showLogin) {
                 // Update content
@@ -232,6 +205,8 @@
         }
 
         const formForgetPassword = document.getElementById('forgetPasswordForm');
+        console.log("formForgetPassword is:", formForgetPassword);
+
 
         formForgetPassword.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -247,6 +222,7 @@
             })
             .then(res => res.json())
             .then(data => {
+                console.log('form submitted');
                 fade(forgetPasswordModal);
                 toggleHidden(forgetPasswordModal, true);
 

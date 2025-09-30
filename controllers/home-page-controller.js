@@ -137,6 +137,7 @@ try{
 })
 try{
 await ntm.save()
+return res.status(200).json({ success: true, message: "Code sent successfully" });
 }catch(err){
    console.log(`error while saving the token ${err}`)
 return res.status(500).send("internal server error while saving in db")
