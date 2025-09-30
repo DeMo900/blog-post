@@ -56,7 +56,7 @@ if(!bc){
     console.log("wrong password")
 }else{
     //redirecting to home page
-     res.redirect("/home")
+     res.status(301).redirect("/home")
     console.log("signin successful")
   
 
@@ -74,7 +74,11 @@ let forgotpassword= async(req,res)=>{
  //validating
  const match = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  if(!match.test(`${req.body.forgetPasswdEmail}`)){
-return res.json("invalid email format")
+    //sending res.json to the front-end
+return res.json({error:"invalid email format"
+    ,code:"VALIDATION_FAILED",
+    status:400
+}).statius(400)
  }
     //checking if user exists
  try{
@@ -117,6 +121,7 @@ await transport.sendMail(
   
 }
 )
+console.log("mail sent successfully")
 }catch(err){
     console.log(`error while sending mail ${err}`)
     return res.status(500).send("error while sending the email")

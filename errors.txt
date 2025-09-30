@@ -1,0 +1,5 @@
+
+(1) in home-page-controller file 
+when the forget password email validation fails it sends a json with
+the error which is invalid email and status code 400 and code INVALID_EMAIL
+/////////////////////////////////////////////////////////////////
