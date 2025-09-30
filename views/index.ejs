@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Site - Login</title>
+    <title>Blog Site - Forget Password</title>
     <link rel="stylesheet" href="/css/tailwind_output.css">
 
     <!-- Font -->
@@ -11,124 +11,79 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 </head>
-<body class="flex justify-center items-center">
+<body>
+
     <section id="formContainer" class="flex justify-center items-center w-full h-full transition-opacity duration-200">
         <div class="relative flex flex-row-reverse sm:flex-col justify-center items-center w-5/6 max-w-[800px] sm:w-full h-4/5 sm:h-full rounded-lg sm:rounded-none overflow-hidden bg-background-lightest shadow-xl">
-            <!-- Login Form -->
-            <form class="transition-opacity duration-500" id="loginForm" action="/signin" method="post">
-                <h1 class="text-right text-brand">Login</h1>
-                <input type="text" name="username" id="username" placeholder="Username" required>
-                <input type="password" name="password" id="password" placeholder="Password" required>
-                <button class="bg-brand" type="submit">Log In</button>
-                <button id="forgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-10 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Forget Password</button>
+            <!-- Forget Password Email Form -->
+            <form id="emailForm" class="transition-opacity duration-200">
+                <h2 class="font-bold text-lg h-6">Enter Your Email</h2>
+                <input type="email" name="forgetPasswdEmail" id="forgetPasswdEmail" class="border-status-info-muted focus:border-status-info" required>
+                <button type="submit" class="bg-status-info hover:bg-status-info-muted">Continue</button>
             </form>
-            <!-- Sign Up Form -->
-            <form class="transition-opacity duration-500" id="signupForm" action="/signup" method="post">
-                <h1 class="text-status-info">Sign Up</h1>
-                <input type="text" name="username" id="username" placeholder="Username" required>
-                <input type="email" name="email" id="email" placeholder="Email" required>
-                <input type="password" name="password" id="password" placeholder="Password" required>
-                <button class="bg-status-info hover:bg-status-info-dark" type="submit">Sign Up</button>
+            <!-- New Password Form -->
+            <form id="passwordForm" class="transition-opacity duration-200">
+                <h2 class="font-bold text-lg h-6">Enter a Password</h2>
+                <input type="password" name="newPassword" id="newPassword" class="border-status-info-muted focus:border-status-info" required>
+                <button type="submit" class="bg-status-info hover:bg-status-info-muted">Reset Password</button>
             </form>
-
-            <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-accent-dark text-white z-10">
+            <!-- Forget Password Code Form -->
+            <form id="codeForm" class="transition-opacity duration-200">
+                <h2 class="font-bold text-lg h-6 text-right">[Email Here]</h2>
+                <input type="text" name="resetPasswdCode" id="resetPasswdCode" class="text-center font-bold border-status-info-muted focus:border-status-info">
+                <button type="submit" class="bg-status-info hover:bg-status-info-muted">Send</button>
+                <div class="flex flex-row justify-between h-0">
+                    <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Wrong Email?</button>
+                    <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Resend (timer)</button>
+                </div>
+            </form>
+            <!-- Sliding Bar -->
+            <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-white z-10">
                 <div id="overlayContent" class="text-center">
-                    <h2 id="overlayTitle" class="text-3xl font-bold mb-4"></h2>
-                    <p id="overlayText" class="mb-6"></p>
-                    <button id="toggleBtn" class="bg-brand hover:bg-brand-dark px-6 py-2 rounded font-semibold transition-all ease-in-out duration-200"></button>
+                    <h2 id="overlayTitle" class="text-3xl font-bold mb-4">Lorem Ipsum</h2>
+                    <p id="overlayText" class="mb-6">Lorem Ipsum</p>
                 </div>
             </div>
         </div>
     </section>
-    <section id="forgetPasswordModal" class="absolute flex justify-center items-center w-full h-full transition-opacity duration-200 opacity-0 hidden">
-        <div class="bg-background-lightest p-5 rounded-lg shadow-lg">
-            <form id="forgetPasswordForm">
-                <h2 class="font-bold text-lg h-6">Enter Your Email</h2>
-                <input type="email" name="forgetPasswdEmail" id="forgetPasswdEmail" class="w-64 border-status-info-muted focus:border-status-info" required>
-                <button type="submit" class="bg-status-info hover:bg-status-info-muted">Continue</button>
-            </form>
-        </div>
-    </section>
-    <section id="forgetPasswordCodeModal" class="absolute flex justify-center items-center w-full h-full transition-opacity duration-200 opacity-0 hidden">
-        <div class="bg-background-lightest p-5 rounded-lg shadow-lg">
-            <form id="forgetPasswordCodeForm" action="">
-                <h2 class="text-center justify-self-center">[Email Here]</h2>
-                <div class="flex flex-row justify-between w-[350px]">
-                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-2')" id="forget-inp-1" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
-                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-3')" id="forget-inp-2" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
-                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-4')" id="forget-inp-3" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
-                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-5')" id="forget-inp-4" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
-                    <input type="text" maxlength="1" oninput="moveNextForgetInput(this, 'forget-inp-6')" id="forget-inp-5" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
-                    <input type="text" maxlength="1" id="forget-inp-6" class="max-w-12 min-w-12 text-center text-xl font-bold border-status-info-muted focus:border-status-info" required>
-                </div>
-                <button type="submit" class="bg-status-info hover:bg-status-info-muted">Forget Password</button>
-                <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Resend (timer)</button>
-                <button id="cancelForgetBtn" class="bg-transparent text-text-primary underline text-sm w-36 h-2 shadow-none hover:bg-transparent hover:shadow-none hover:text-status-info" type="button">Wrong Email?</button>
-            </form>
-        </div>
-    </section>
     <script src="/js/common.js"></script>
     <script>
-        // Media query to detect small screens
-        const isSmallScreen = window.matchMedia('(max-width: 639px)');
-        
-        // JavaScript to handle the toggle between Login and Sign Up
-        // Get Elements
-        const formContainer = document.getElementById('formContainer');
-        const forgetPasswordModal = document.getElementById('forgetPasswordModal');
-        const forgetPasswordCodeModal = document.getElementById('forgetPasswordCodeModal');
-        
-        const toggleBtn = document.getElementById('toggleBtn');
+        // Get Forms
+        const emailForm = document.getElementById('emailForm');
+        const passwordForm = document.getElementById('passwordForm');
+        const codeForm = document.getElementById('codeForm');
+
+        // Get Overlay
         const overlay = document.getElementById('overlay');
         const overlayTitle = document.getElementById('overlayTitle');
         const overlayText = document.getElementById('overlayText');
 
-        const forgetBtn = document.getElementById('forgetBtn');
-
-        // Element Contents
-        const overlayTitleLoginContent = 'Welcome Back!';
-        const overlayTitleSignUpContent = 'Join Us!';
-        const overlayTextLoginContent = 'Please enter your credentials to log in.';
-        const overlayTextSignUpContent = 'Create a new account to join our community.';
-        const overlayButtonLoginContent = 'Sign Up';
-        const overlayButtonSignUpContent = 'Log In';
-
-        // Get Forms
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-
-        // Initialize the overlay content
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize form content
-            changeOverlayContent();
-
-            // Inizialize form visibility
-            loginForm.classList.remove('opacity-0');
-            loginForm.classList.add('opacity-100');
-            signupForm.classList.remove('opacity-100');
-            signupForm.classList.add('opacity-0');
-        });
+        // Overlay Content
+        const overlayTitleContent = 'Reset Password';
+        const overlayTextEmailContent = 'Enter the email used to create your account';
+        const overlayTextPasswordContent = 'Enter a new password to use for your account (please try not to forget it again)';
+        const overlayTextCodeContent = 'Enter the six digit code sent to your email';
         
-        // Check if the login or signup form is showing
-        let showLogin = true;
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inizialize Form Visiblity
+            emailForm.classList.remove('opacity-0');
+            emailForm.classList.add('opacity-100');
 
-        toggleBtn.addEventListener('click', () => {
-            // Update overlay for mobile
-            if (overlay.classList.contains('sm:translate-y-full')) {
-                overlay.classList.remove('sm:translate-y-full');
-            }
+            passwordForm.classList.remove('opacity-100');
+            passwordForm.classList.add('opacity-0');
+            passwordForm.classList.add('hidden');
+            
+            codeForm.classList.remove('opacity-100');
+            codeForm.classList.add('opacity-0');
 
-            // Change between forms
-            showLogin = !showLogin;
+            // Inizialize Overlay Content
+            overlayTitle.textContent = overlayTitleContent;
+            overlayText.textContent = overlayTextEmailContent;
+        });
 
-            // Update forms visibility
-            fade(loginForm);
-            fade(signupForm);
-
-            if (showLogin) {
-                // Update the overlay for login
-
-                // Move the overlay to the left for Login
+        function moveOverlay() {
+            if (overlay.classList.contains('translate-x-full') || overlay.classList.contains('translate-y-0')) {
+                // Move the overlay to the left
                 if (isSmallScreen.matches) {
                     overlay.classList.remove('translate-y-0');
                     overlay.classList.add('translate-y-full');
@@ -136,15 +91,8 @@
                     overlay.classList.remove('translate-x-full');
                     overlay.classList.add('translate-x-0');
                 }
-
-                // Update the overlay for Login
-                changeOverlayContent(true);
-
-                
             } else {
-                // Update the overlay for Sign Up
-
-                // Move the overlay to the right for Sign Up
+                // Move the overlay to the right
                 if (isSmallScreen.matches) {
                     overlay.classList.remove('translate-y-full');
                     overlay.classList.add('translate-y-0');
@@ -152,67 +100,15 @@
                     overlay.classList.remove('translate-x-0');
                     overlay.classList.add('translate-x-full');
                 }
-
-                // Update the overlay for Sign Up
-                changeOverlayContent(false);
-            }
-        });
-
-        forgetBtn.addEventListener('click', () => {
-            fade(formContainer);
-            toggleHidden(formContainer, true);
-
-            setTimeout(() => {
-                toggleHidden(forgetPasswordModal);
-                fade(forgetPasswordModal);
-            }, 100);
-        });
-
-        function moveNextForgetInput(current, next) {
-            if (current.value.length >= 1 && current.value != ' ') {
-                document.getElementById(next)?.focus();
             }
         }
 
-        function changeOverlayContent(showLogin = true) {
-            if (showLogin) {
-                // Update content
-                overlayTitle.textContent = overlayTitleLoginContent;
-                overlayText.textContent = overlayTextLoginContent;
-                toggleBtn.textContent = 'Sign Up';
-
-                // Update colors
-                overlay.classList.remove('bg-status-info-muted');
-                overlay.classList.add('bg-accent-dark');
-                toggleBtn.classList.remove('bg-status-info');
-                toggleBtn.classList.remove('hover:bg-status-info-dark');
-                toggleBtn.classList.add('bg-brand');
-                toggleBtn.classList.add('hover:bg-brand-dark');
-            } else {
-                // Update content
-                overlayTitle.textContent = overlayTitleSignUpContent;
-                overlayText.textContent = overlayTextSignUpContent;
-                toggleBtn.textContent = overlayButtonSignUpContent;
-
-                // Update colors
-                overlay.classList.add('bg-status-info-muted');
-                overlay.classList.remove('bg-accent-dark');
-                toggleBtn.classList.add('bg-status-info');
-                toggleBtn.classList.add('hover:bg-status-info-dark');
-                toggleBtn.classList.remove('bg-brand');
-                toggleBtn.classList.remove('hover:bg-brand-dark');
-            }
-        }
-
-        const formForgetPassword = document.getElementById('forgetPasswordForm');
-        console.log("formForgetPassword is:", formForgetPassword);
-
-
-        formForgetPassword.addEventListener('submit', function(e) {
+        // Send Email to the Backend
+        emailForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
             const forgetPasswdEmail = document.getElementById('forgetPasswdEmail').value;
-
+            
             fetch('/signin/forgotpassword', {
                 method: 'POST',
                 headers: {
@@ -222,29 +118,28 @@
             })
             .then(res => res.json())
             .then(data => {
-                console.log('form submitted');
-                fade(forgetPasswordModal);
-                toggleHidden(forgetPasswordModal, true);
+                console.log(data);
 
-                toggleHidden(forgetPasswordCodeModal);
-                fade(forgetPasswordCodeModal);
+                if (data.success) {
+                    fade(emailForm);
+                    fade(codeForm);
+
+                    overlayText.textContent = overlayTextCodeContent;
+                    moveOverlay();
+                } else {
+                    alert(data.error);
+                }
             })
             .catch(err => console.error(err));
         });
 
-        const formForgetPasswordCode = document.getElementById('forgetPasswordCodeForm');
-
-        formForgetPasswordCode.addEventListener('submit', function(e) {
+        // Verify Code
+        codeForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const forgetPasswdCode1 = document.getElementById('forget-inp-1').value;
-            const forgetPasswdCode2 = document.getElementById('forget-inp-2').value;
-            const forgetPasswdCode3 = document.getElementById('forget-inp-3').value;
-            const forgetPasswdCode4 = document.getElementById('forget-inp-4').value;
-            const forgetPasswdCode5 = document.getElementById('forget-inp-5').value;
-            const forgetPasswdCode6 = document.getElementById('forget-inp-6').value;
-            const forgetPasswdCode = `${forgetPasswdCode1}${forgetPasswdCode2}${forgetPasswdCode3}${forgetPasswdCode4}${forgetPasswdCode5}${forgetPasswdCode6}`;
-
+            const forgetPasswdCode = document.getElementById('resetPasswdCode').value;
+            console.log(forgetPasswdCode);
+            
             fetch('/signin/forgotpassword/verify', {
                 method: 'POST',
                 headers: {
@@ -254,11 +149,15 @@
             })
             .then(res => res.json())
             .then(data => {
-                fade(forgetPasswordCodeModal);
-                toggleHidden(forgetPasswordCodeModal, true);
+                fade(codeForm);
 
-                toggleHidden(formContainer);
-                fade(formContainer);
+                toggleHidden(emailForm);
+
+                toggleHidden(passwordForm);
+                fade(passwordForm);
+
+                overlayText.textContent = overlayTextPasswordContent;
+                moveOverlay();
             })
             .catch(err => console.error(err));
         });

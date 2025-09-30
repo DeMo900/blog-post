@@ -1,3 +1,10 @@
+// Media query to detect small screens
+const isSmallScreen = window.matchMedia('(max-width: 639px)');
+
+function reloadPage() {
+    location.reload(true);
+}
+
 function fade(e) {            
     if (e.classList.contains('opacity-100') || !e.classList.contains('opacity-0')) {
         e.classList.remove('opacity-100');
