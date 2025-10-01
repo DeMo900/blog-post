@@ -10,9 +10,14 @@ require("dotenv").config()
 let gethome = (req,res)=>{
     res.render("home")
 }
-//rendering inndex
+//rendering forget password page
 let getindex = (req,res)=>{
     res.render("index")
+}
+//rendering siginup page
+
+let getsignup = (req,res)=>{
+res.render("login")
 }
 //signup
 let signup = async (req,res)=>{
@@ -75,17 +80,21 @@ let forgotpassword= async(req,res)=>{
  const match = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  if(!match.test(`${req.body.forgetPasswdEmail}`)){
     //sending res.json to the front-end
-return res.json({error:"invalid email format"
+return res.status(400).json({error:"invalid email format"
     ,code:"VALIDATION_FAILED",
     status:400
-}).statius(400)
+})
  }
     //checking if user exists
  try{
  let result =await um.find({email:req.body.forgetPasswdEmail})
     if(result.length===0){
         console.log("not found,sign up first sir ")
-        return res.status(404).send("user not found signup first")
+        return res.status(404).json({
+            error:"user not found",
+            status:404,
+            code:"USER_NOT_FOUND"
+    })
     }
 }catch(err){
     console.log(err)
@@ -105,9 +114,8 @@ code+=crypto.randomInt(0,9)
 const transport = mailer.createTransport({
    
       service: 'gmail',
-    port: 587,
     auth: {
-        user: process.env.APP_EMAIL,
+        user: "proplayer524522@gmail.com",
         pass: process.env.APP_PASS
     }
 })
@@ -115,6 +123,7 @@ const transport = mailer.createTransport({
 try{
 await transport.sendMail(
     {
+        from:"",
   to: `${req.body.forgetPasswdEmail}`, 
   subject: `YOUR CODE`, 
   text: `HERE IS YOUR CODE DON'T FORGET YOUR PASSWORD AGAIN :( \n ${code}`, 
@@ -149,5 +158,21 @@ return res.status(500).send("internal server error while saving in db")
 }
 }  
 
+//verfying the code
+let verify = async(req,res)=>{
+    console.log(req.body)
+let results = await tm.findOne(req.body)
+if(!results){
+        console.log("invalid code")
+    return res.status(400).json({
+        error:"invalid code,please resend",
+        status:400,
+        code:"INVALID_CODE"
+    })
+
+}
+
+}
+
 //exporting
-module.exports={gethome,getindex,signup,signin,forgotpassword}
+module.exports={gethome,getindex,signup,forgotpassword,signin,getsignup,verify}
