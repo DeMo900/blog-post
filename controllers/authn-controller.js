@@ -104,7 +104,7 @@ return res.status(400).json({error:"invalid email format"
 let code ="" 
 try{
 for (let i=0;i<6;i++){
-code+=crypto.randomInt(0,9)
+code+=crypto.randomInt(0,10)
 }
 }catch(err){
     console.log(`error while generating the code ${err}`)
@@ -169,8 +169,14 @@ if(!results){
         status:400,
         code:"INVALID_CODE"
     })
-
 }
+try{
+await tm.deleteOne(req.body)
+}catch(err){
+    console.log(`error while deleting the used code ${err}`)
+    return res.status(500).send("internal server error")
+}
+res.redirect("/")
 
 }
 
