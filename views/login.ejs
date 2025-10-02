@@ -46,8 +46,6 @@
         // JavaScript to handle the toggle between Login and Sign Up
         // Get Elements
         const formContainer = document.getElementById('formContainer');
-        const forgetPasswordModal = document.getElementById('forgetPasswordModal');
-        const forgetPasswordCodeModal = document.getElementById('forgetPasswordCodeModal');
         
         const toggleBtn = document.getElementById('toggleBtn');
         const overlay = document.getElementById('overlay');
@@ -130,7 +128,7 @@
         });
 
         forgetBtn.addEventListener('click', () => {
-            
+            location.href = '/forgetPassword';
         });
 
         function changeOverlayContent(showLogin = true) {
@@ -162,65 +160,6 @@
                 toggleBtn.classList.remove('hover:bg-brand-dark');
             }
         }
-
-        const formForgetPassword = document.getElementById('forgetPasswordForm');
-        console.log("formForgetPassword is:", formForgetPassword);
-
-
-        formForgetPassword.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const forgetPasswdEmail = document.getElementById('forgetPasswdEmail').value;
-
-            fetch('/signin/forgotpassword', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ forgetPasswdEmail })
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log('form submitted');
-                fade(forgetPasswordModal);
-                toggleHidden(forgetPasswordModal, true);
-
-                toggleHidden(forgetPasswordCodeModal);
-                fade(forgetPasswordCodeModal);
-            })
-            .catch(err => console.error(err));
-        });
-
-        const formForgetPasswordCode = document.getElementById('forgetPasswordCodeForm');
-
-        formForgetPasswordCode.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const forgetPasswdCode1 = document.getElementById('forget-inp-1').value;
-            const forgetPasswdCode2 = document.getElementById('forget-inp-2').value;
-            const forgetPasswdCode3 = document.getElementById('forget-inp-3').value;
-            const forgetPasswdCode4 = document.getElementById('forget-inp-4').value;
-            const forgetPasswdCode5 = document.getElementById('forget-inp-5').value;
-            const forgetPasswdCode6 = document.getElementById('forget-inp-6').value;
-            const forgetPasswdCode = `${forgetPasswdCode1}${forgetPasswdCode2}${forgetPasswdCode3}${forgetPasswdCode4}${forgetPasswdCode5}${forgetPasswdCode6}`;
-
-            fetch('/signin/forgotpassword/verify', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ forgetPasswdCode })
-            })
-            .then(res => res.json())
-            .then(data => {
-                fade(forgetPasswordCodeModal);
-                toggleHidden(forgetPasswordCodeModal, true);
-
-                toggleHidden(formContainer);
-                fade(formContainer);
-            })
-            .catch(err => console.error(err));
-        });
     </script>
 </body>
 </html>

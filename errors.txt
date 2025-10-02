@@ -1,12 +1,16 @@
-
+// DONE
 (1) in home-page-controller file 
 when the forget password email validation fails it sends a json with
 the error which is invalid email and status code 400 and code INVALID_EMAIL
+
 /////////////////////////////////////////////////////////////////
+
  (2)in home-page-controller file 
  when the forget password email wasn't registered before it sends a json with the error code which is 
  USER_NOT_FOUND and status 404
+
  ////////////////////////////////////////////////////////////////
+ 
  {3} in home-page-controller file 
  when the user type the code that was expired it sends a json with 
  INVALID_CODE code and invalid code,please resend error with 404 status code
