@@ -78,7 +78,7 @@ let forgotpassword= async(req,res)=>{
  console.log(req.body)
  //validating
  const match = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
- if(!match.test(`${req.body.forgetPasswdEmail}`)){
+ if(!match.test(`${req.body.email}`)){
     //sending res.json to the front-end
 return res.status(400).json({error:"invalid email format"
     ,code:"VALIDATION_FAILED",
@@ -87,7 +87,7 @@ return res.status(400).json({error:"invalid email format"
  }
     //checking if user exists
  try{
- let result =await um.find({email:req.body.forgetPasswdEmail})
+ let result =await um.find({email:req.body.email})
     if(result.length===0){
         console.log("not found,sign up first sir ")
         return res.status(404).json({
@@ -124,7 +124,7 @@ try{
 await transport.sendMail(
     {
         from:"",
-  to: `${req.body.forgetPasswdEmail}`, 
+  to: `${req.body.email}`, 
   subject: `YOUR CODE`, 
   text: `HERE IS YOUR CODE DON'T FORGET YOUR PASSWORD AGAIN :( \n ${code}`, 
   
@@ -144,12 +144,14 @@ try{
     console.log(`error while hashing the code ${err}`)
     return res.status(500).send(`error while hashing`)
 }       
+//clearing previous codes from the same email
+try{
+await tm.deleteMany({email:req.body.email})
 //storing 
  let ntm=new tm({
-    email:req.body.forgetPasswdEmail,
+    email:req.body.email,
     token:hashedcode,
 })
-try{
 await ntm.save()
 return res.status(200).json({ success: true, message: "Code sent successfully" });
 }catch(err){
@@ -160,23 +162,37 @@ return res.status(500).send("internal server error while saving in db")
 
 //verfying the code
 let verify = async(req,res)=>{
-    console.log(req.body)
-let results = await tm.findOne(req.body)
-if(!results){
-        console.log("invalid code")
-    return res.status(400).json({
-        error:"invalid code,please resend",
-        status:400,
-        code:"INVALID_CODE"
+//chcking if code is provided
+let results = await tm.find()
+if(req.body.code.length!==6){
+ console.log("validation error: code must be 6 digits")
+    return res.status(400)
+}
+if(results.length===0){
+    console.log("no code found,request for a new one")
+    return res.status(404).json({
+        error:"no code found,request for a new one",
+        code:"NO_CODE_FOUND",
+        status:404
     })
 }
+//checking if code matches
 try{
-await tm.deleteOne(req.body)
+let ismatch = await bcrypt.compare(req.body.code,results[0].token)
+if(!ismatch){
+      console.log("invalid code ")
+    return res.status(400).json({
+        error:"invalid code",
+        code:"INVALID_CODE",
+        status:404
+    })
+}
 }catch(err){
-    console.log(`error while deleting the used code ${err}`)
+    console.log(`error while comparing the code ${err}`)
     return res.status(500).send("internal server error")
 }
-res.redirect("/")
+    //logging success
+console.log("code matched")
 
 }
 

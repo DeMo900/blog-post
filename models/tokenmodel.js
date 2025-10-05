@@ -1,12 +1,12 @@
 
-const { number } = require("joi");
 const mongo = require("mongoose")
 
 let token = new mongo.Schema({
     email:{
         type:String,
         required:true,
-        match:/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        match:/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        unique:true
     },
     token:{
         type:String,
@@ -17,7 +17,7 @@ let token = new mongo.Schema({
   createdAt:{
     type:Date,
     default:Date.now,
-    expires:900
+    expires:900 //15 minutes
   }
 
 })
