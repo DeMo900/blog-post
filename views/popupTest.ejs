@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <link rel="stylesheet" href="/css/tailwind_output.css">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section id="popups" class="absolute w-full h-full hidden"></section>
+
+    <section class="w-full h-full flex justify-center items-center">
+        <div class="flex flex-col bg-brand p-5 rounded-xl">
+            <h1 class="mb-4 text-text-secondary">Test the Popup</h1>
+            <button onclick="showPopup('info', 'This is an Info Popup')" class="buttonInfo rounded-b-none">Show Info Popup</button>
+            <button onclick="showPopup('warning', 'This is a Warning Popup')" class="buttonWarning rounded-none">Show Warning Popup</button>
+            <button onclick="showPopup('danger', 'This is an Error Popup')" class="buttonDanger rounded-t-none">Show Danger Popup</button>
+        </div>
+    </section>
+
+
+<script src="/js/common.js"></script>
+</body>
+</html>

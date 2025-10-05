@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 </head>
 <body>
+    <section id="popups" class="absolute w-full h-full z-10 hidden"></section>
     <section id="container" class="flex justify-center items-center w-full h-full transition-opacity duration-200">
         <div class="relative flex flex-row-reverse sm:flex-col justify-center items-center w-5/6 max-w-[800px] sm:w-full h-4/5 sm:h-full rounded-lg sm:rounded-none overflow-hidden bg-background-lightest shadow-xl">
             <!-- Forget Password Email Form -->
@@ -37,7 +38,7 @@
                 </div>
             </form>
             <!-- Sliding Bar -->
-            <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-white z-10">
+            <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-white -z-10">
                 <div id="overlayContent" class="text-center">
                     <h2 id="overlayTitle" class="text-3xl font-bold mb-4">Lorem Ipsum</h2>
                     <p id="overlayText" class="mb-6">Lorem Ipsum</p>
@@ -130,8 +131,8 @@
                     overlayText.textContent = overlayTextCodeContent;
                     moveOverlay();
                 } else {
-                    console.log(data);
-                    alert(data.error);
+                    console.log(data.error);
+                    showPopup('error', data.error);
                 }
             })
             .catch(err => console.error(err));
@@ -153,15 +154,21 @@
             })
             .then(res => res.json())
             .then(data => {
-                fade(codeForm);
+                if (data.success) {
+                    fade(codeForm);
 
-                toggleHidden(emailForm);
+                    toggleHidden(emailForm);
 
-                toggleHidden(passwordForm);
-                fade(passwordForm);
+                    toggleHidden(passwordForm);
+                    fade(passwordForm);
 
-                overlayText.textContent = overlayTextPasswordContent;
-                moveOverlay();
+                    overlayText.textContent = overlayTextPasswordContent;
+                    moveOverlay();
+                } else {
+                    console.log(data.error);
+                    showPopup('error', data.error);
+                }
+                
             })
             .catch(err => console.error(err));
         });
