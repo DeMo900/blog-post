@@ -163,12 +163,12 @@ return res.status(500).send("internal server error while saving in db")
 //verfying the code
 let verify = async(req,res)=>{
 //chcking if code is provided
-let results = await tm.find()
+let results = await tm.findOne()
 if(req.body.code.length!==6){
  console.log("validation error: code must be 6 digits")
     return res.status(400)
 }
-if(results.length===0){
+if(!results){
     console.log("no code found,request for a new one")
     return res.status(404).json({
         error:"no code found,request for a new one",
@@ -178,13 +178,14 @@ if(results.length===0){
 }
 //checking if code matches
 try{
-let ismatch = await bcrypt.compare(req.body.code,results[0].token)
+    console.log(results)
+let ismatch = await bcrypt.compare(req.body.code,results.token)
 if(!ismatch){
       console.log("invalid code ")
     return res.status(400).json({
         error:"invalid code",
         code:"INVALID_CODE",
-        status:404
+        status:400
     })
 }
 }catch(err){
@@ -195,6 +196,13 @@ if(!ismatch){
 console.log("code matched")
 
 }
+let updatepassword = async(req,res)=>{
+    //use joi to validate the password 
+// hashing req.body.password
+//storing the new hashed password in the db
+//handle errors 
+
+}
 
 //exporting
-module.exports={gethome,getindex,signup,forgotpassword,signin,getsignup,verify}
+module.exports={gethome,getindex,signup,forgotpassword,updatepassword,signin,getsignup,verify}

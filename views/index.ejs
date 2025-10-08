@@ -38,12 +38,12 @@
                 </div>
             </form>
             <!-- Sliding Bar -->
-            <!-- <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-white -z-10">
+            <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-white -z-10">
                 <div id="overlayContent" class="text-center">
                     <h2 id="overlayTitle" class="text-3xl font-bold mb-4">Lorem Ipsum</h2>
                     <p id="overlayText" class="mb-6">Lorem Ipsum</p>
                 </div>
-            </div> -->
+            </div> 
         </div>
     </section>
     <script src="/js/common.js"></script>
@@ -85,7 +85,7 @@
         });
 
         // Resend Code
-        let resendCodeBtn = document.getElementById('resendCodeBtn');
+   /*     let resendCodeBtn = document.getElementById('resendCodeBtn');
         let startResendCountdown = false;
         let resendCodeCooldown = 60;
         let resendTimer = resendCodeCooldown;
@@ -115,6 +115,7 @@
                 }, 1000);
             }
         }
+     
         
         function resendCode() {
             fetch('/signin/forgotpassword', {
@@ -128,7 +129,7 @@
             .then(data => {resendTimer = resendCodeCooldown})
             .catch(err => console.error(err));
         }
-
+*/
         function moveOverlay() {
             if (overlay.classList.contains('translate-x-full') || overlay.classList.contains('translate-y-0')) {
                 // Move the overlay to the left
@@ -150,7 +151,7 @@
                 }
             }
         }
-        
+           
         // Send Email to the Backend
         emailForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -173,7 +174,7 @@
                     fade(emailForm);
                     fade(codeForm);
 
-                    startResendCountdown = true;
+                  //  startResendCountdown = true;
                     
                     overlayText.textContent = overlayTextCodeContent;
                     moveOverlay();
