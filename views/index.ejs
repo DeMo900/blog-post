@@ -16,17 +16,17 @@
     <section id="container" class="flex justify-center items-center w-full h-full transition-opacity duration-200">
         <div class="relative flex flex-row-reverse sm:flex-col justify-center items-center w-5/6 max-w-[800px] sm:w-full h-4/5 sm:h-full rounded-lg sm:rounded-none overflow-hidden bg-background-lightest shadow-xl">
             <!-- Forget Password Email Form -->
-            <!-- <form id="emailForm" class="transition-opacity duration-200">
+            <form id="emailForm" class="transition-opacity duration-200">
                 <h2 class="font-bold text-lg h-6">Enter Your Email</h2>
                 <input type="email" name="forgetPasswdEmail" id="forgetPasswdEmail" class="border-status-info-muted focus:border-status-info" required>
                 <button type="submit" class="bg-status-info hover:bg-status-info-muted">Continue</button>
-            </form> -->
+            </form>
             <!-- New Password Form -->
-            <!-- <form id="passwordForm" class="transition-opacity duration-200">
+            <form id="passwordForm" class="transition-opacity duration-200">
                 <h2 class="font-bold text-lg h-6">Enter a Password</h2>
                 <input type="password" name="newPassword" id="newPassword" class="border-status-info-muted focus:border-status-info" required>
                 <button type="submit" class="bg-status-info hover:bg-status-info-muted">Reset Password</button>
-            </form> -->
+            </form>
             <!-- Forget Password Code Form -->
             <form id="codeForm" class="transition-opacity duration-200">
                 <h2 class="font-bold text-lg h-6 text-right">[Email Here]</h2>
@@ -38,12 +38,12 @@
                 </div>
             </form>
             <!-- Sliding Bar -->
-            <!-- <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-white -z-10">
+            <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-white -z-10">
                 <div id="overlayContent" class="text-center">
                     <h2 id="overlayTitle" class="text-3xl font-bold mb-4">Lorem Ipsum</h2>
                     <p id="overlayText" class="mb-6">Lorem Ipsum</p>
                 </div>
-            </div>  -->
+            </div> 
         </div>
     </section>
     <script src="/js/common.js"></script>
@@ -69,7 +69,7 @@
         
         document.addEventListener('DOMContentLoaded', () => {
             // Inizialize Form Visiblity
-            /*emailForm.classList.remove('opacity-0');
+            emailForm.classList.remove('opacity-0');
             emailForm.classList.add('opacity-100');
 
             passwordForm.classList.remove('opacity-100');
@@ -77,7 +77,7 @@
             passwordForm.classList.add('hidden');
             
             codeForm.classList.remove('opacity-100');
-            codeForm.classList.add('opacity-0');*/
+            codeForm.classList.add('opacity-0');
 
             // Inizialize Overlay Content
             overlayTitle.textContent = overlayTitleContent;
