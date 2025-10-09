@@ -162,12 +162,15 @@ return res.status(500).send("internal server error while saving in db")
 
 //verfying the code
 let verify = async(req,res)=>{
-//chcking if code is provided
+//validating the code
+let tbody = req.body.code.trim()
 let results = await tm.findOne()
-if(req.body.code.length!==6){
+if(tbody.length!==6){
  console.log("validation error: code must be 6 digits")
+ //console.log(req.body.code.length)
     return res.status(400)
 }
+//chcking if code is provided
 if(!results){
     console.log("no code found,request for a new one")
     return res.status(404).json({
@@ -179,7 +182,7 @@ if(!results){
 //checking if code matches
 try{
     console.log(results)
-let ismatch = await bcrypt.compare(req.body.code,results.token)
+let ismatch = await bcrypt.compare(tbody,results.token)
 if(!ismatch){
       console.log("invalid code ")
     return res.status(400).json({
@@ -194,12 +197,38 @@ if(!ismatch){
 }
     //logging success
 console.log("code matched")
-
+res.status(200).json({success:true,message:"code verified",status:200})
 }
 let updatepassword = async(req,res)=>{
-    //use joi to validate the password 
+    //getting the user
+    let finding = await um.findOne({email:req.body.email})
+    let vuser = {
+        email:finding.email,
+        username:finding.username,
+        password:req.body.password
+    }
+ //use joi to validate the password 
+    try{
+    validation(vuser)
+    }catch(err){
+        console.log(`validation error: ${err}`)
+        return res.status(400).send(`validation error: ${err}`)
+    }
+   
+
 // hashing req.body.password
+let hashedpass = await bcrypt.hash(req.body.password,12)
 //storing the new hashed password in the db
+try{
+    await um.updateOne({email:req.body.email,username:finding.username},
+        {$set:{password:hashedpass}}
+        )
+    console.log("password updated successfully")
+    res.status(200).json({success:true,message:"password updated successfully",status:200}) 
+}catch(err){
+    console.log(`error while updating the password ${err}`)
+    return res.status(500).send("internal server error")
+}
 //handle errors 
 
 }
