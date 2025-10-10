@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 </head>
 <body>
-    <section id="popups" class="absolute w-full h-full z-10 hidden"></section>
+    <section id="popups" class="absolute w-full h-full z-20 hidden"></section>
     <section id="container" class="flex justify-center items-center w-full h-full transition-opacity duration-200">
         <div class="relative flex flex-row-reverse sm:flex-col justify-center items-center w-5/6 max-w-[800px] sm:w-full h-4/5 sm:h-full rounded-lg sm:rounded-none overflow-hidden bg-background-lightest shadow-xl">
             <!-- Forget Password Email Form -->
@@ -29,7 +29,7 @@
             </form>
             <!-- Forget Password Code Form -->
             <form id="codeForm" class="transition-opacity duration-200">
-                <h2 class="font-bold text-lg h-6 text-right">[Email Here]</h2>
+                <h2 id="codeFormEmailText" class="font-bold text-lg h-6 text-right">[Email Here]</h2>
                 <input type="text" name="resetPasswdCode" id="resetPasswdCode" class="text-center font-bold border-status-info-muted focus:border-status-info">
                 <button type="submit" class="bg-status-info hover:bg-status-info-muted">Send</button>
                 <div class="flex flex-row justify-between h-0">
@@ -38,12 +38,12 @@
                 </div>
             </form>
             <!-- Sliding Bar -->
-            <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-white -z-10">
+            <div id="overlay" class="absolute top-0 left-0 sm:translate-y-full w-1/2 sm:w-full h-full sm:h-1/2 flex flex-col justify-center items-center p-8 shadow-lg transition-all duration-700 ease-in-out bg-status-info-muted text-text-secondary z-10">
                 <div id="overlayContent" class="text-center">
-                    <h2 id="overlayTitle" class="text-3xl font-bold mb-4">Lorem Ipsum</h2>
-                    <p id="overlayText" class="mb-6">Lorem Ipsum</p>
+                    <h2 id="overlayTitle" class="text-3xl font-bold mb-4"></h2>
+                    <p id="overlayText" class="mb-6"></p>
                 </div>
-            </div> 
+            </div>
         </div>
     </section>
     <script src="/js/common.js"></script>
@@ -84,16 +84,22 @@
             overlayText.textContent = overlayTextEmailContent;
         });
 
+        // Wrong Email
+        document.getElementById('cancelForgetBtn').addEventListener('click', () => {
+            reloadPage();
+        });
+        
         // Resend Code
         let resendCodeBtn = document.getElementById('resendCodeBtn');
         let startResendCountdown = false;
-        let resendCodeCooldown = 60;
+        let resendCodeCooldown = 10;
         let resendTimer = resendCodeCooldown;
         
         resendCodeBtn.addEventListener('click', () => {
             console.log('Start Countdown: ', startResendCountdown);
             if (resendTimer <= 0) {
                 resendCode();
+                resendTimer = resendCodeCooldown;
             } else {
                 showPopup('warning', `Wait ${resendTimer} seconds before trying again.`);
             }
@@ -104,16 +110,18 @@
         }, 1000);
         
         function resendCodeCountdown() {
-                if (resendTimer > 0) {
-                    resendTimer--;
-                    resendCodeBtn.textContent = `Resend (${resendTimer})`;
-                    console.log(resendTimer);
-                } else {
-                    startResendCountdown = false;
-                }
+            if (resendTimer > 0) {
+                resendTimer--;
+                resendCodeBtn.textContent = `Resend (${resendTimer})`;
+                console.log(resendTimer);
+            } else {
+                startResendCountdown = false;
+            }
         }
         
         function resendCode() {
+            if (event) event.preventDefault();
+            
             fetch('/signin/forgotpassword', {
                 method: 'POST',
                 headers: {
@@ -122,7 +130,9 @@
                 body: JSON.stringify({ 'email': email })
             })
             .then(res => res.json())
-            .then(data => {resendTimer = resendCodeCooldown})
+            .then(data => {
+                showPopup('info', data);
+            })
             .catch(err => console.error(err));
         }
 
@@ -170,10 +180,12 @@
                     fade(emailForm);
                     fade(codeForm);
 
-                  //  startResendCountdown = true;
+                    startResendCountdown = true;
                     
                     overlayText.textContent = overlayTextCodeContent;
                     moveOverlay();
+
+                    document.getElementById('codeFormEmailText').textContent = email;
                 } else {
                     console.log(data.error);
                     showPopup('error', data.error);
